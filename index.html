@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ara</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;600&family=Baloo+2:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #FFF7FB;
+  color: #3A2A33;
+  overflow-x: hidden;
+}
+
+/* FLOATING HEARTS */
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-hearts span {
+  position: absolute;
+  bottom: -20px;
+  width: 14px;
+  height: 14px;
+  background: #F48FB1;
+  opacity: 0.6;
+  transform: rotate(45deg);
+  animation: floatUp 10s linear infinite;
+}
+
+.floating-hearts span::before,
+.floating-hearts span::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #F48FB1;
+  border-radius: 50%;
+}
+
+.floating-hearts span::before { top: -7px; left: 0; }
+.floating-hearts span::after { left: -7px; top: 0; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(45deg); opacity: 0; }
+  10% { opacity: 0.6; }
+  100% { transform: translateY(-120vh) rotate(45deg); opacity: 0; }
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 235, 244, 0.75);
+  backdrop-filter: blur(14px);
+  z-index: 100;
+}
+
+nav .logo {
+  font-family: 'Baloo 2', cursive;
+  font-size: 22px;
+  color: #F06292;
+}
+
+nav a {
+  margin-left: 24px;
+  text-decoration: none;
+  color: #8C6A7B;
+  font-size: 14px;
+}
+
+nav a:hover { color: #F06292; }
+
+/* PAGE */
+.page {
+  min-height: 100vh;
+  padding: 140px 40px;
+  max-width: 1100px;
+  margin: auto;
+  display: none;
+}
+
+.page.active { display: block; }
+
+/* HERO */
+.hero h1 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 56px;
+}
+
+.hero p {
+  margin-top: 24px;
+  font-size: 18px;
+  color: #8C6A7B;
+  max-width: 520px;
+}
+
+/* TITLES */
+.about h2,
+.ask h2 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: #F06292;
+}
+
+.about p {
+  font-size: 17px;
+  color: #5C4450;
+  line-height: 1.9;
+  max-width: 700px;
+  margin-bottom: 18px;
+}
+
+/* GALLERY */
+.gallery {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.photo {
+  height: 240px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #FCE4EC, #FFFFFF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F06292;
+  font-weight: 600;
+  box-shadow: 0 12px 30px rgba(240,98,146,0.15);
+  animation: floatCard 4s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ASK */
+.ask { text-align: center; }
+
+.ask p {
+  font-size: 18px;
+  color: #5C4450;
+  margin-bottom: 30px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+button {
+  padding: 14px 34px;
+  border-radius: 999px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.35s ease;
+}
+
+/* BUTTONS */
+.yes {
+  background: linear-gradient(135deg, #F06292, #F48FB1);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(240,98,146,0.45);
+  animation: bounce 1.8s infinite;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.no {
+  background: #FFFFFF;
+  color: #F06292;
+  border: 2px dashed #F8BBD0;
+}
+
+.no:hover {
+  background: #FCE4EC;
+  transform: rotate(-3deg);
+}
+
+/* ENDING */
+.ending p {
+  font-size: 18px;
+  color: #5C4450;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  line-height: 1.8;
+}
+
+/* REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1s cubic-bezier(.19,1,.22,1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* LOVE SCENE */
+#loveScene {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 247, 251, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+#loveScene.active { opacity: 1; pointer-events: all; }
+
+.heart {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #F06292;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #F06292;
+  border-radius: 50%;
+}
+
+.heart::before { top: -40px; left: 0; }
+.heart::after { left: -40px; top: 0; }
+
+.heart.left { left: 20%; }
+.heart.right { right: 20%; }
+.heart.center { transform: scale(0) rotate(45deg); }
+
+#loveScene.play .left { animation: moveLeft 1.8s ease forwards; }
+#loveScene.play .right { animation: moveRight 1.8s ease forwards; }
+#loveScene.play .center {
+  animation: appearCenter 1s ease forwards;
+  animation-delay: 1.8s;
+}
+
+@keyframes moveLeft {
+  to { opacity: 1; transform: translateX(140px) rotate(45deg); }
+}
+@keyframes moveRight {
+  to { opacity: 1; transform: translateX(-140px) rotate(45deg); }
+}
+@keyframes appearCenter {
+  to { opacity: 1; transform: scale(1.2) rotate(45deg); }
+}
+
+/* BUNNY */
+.bunny {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 42px;
+  animation: wiggle 3s infinite;
+  z-index: 10;
+}
+
+@keyframes wiggle {
+  0%,100% { transform: rotate(0); }
+  25% { transform: rotate(8deg); }
+  75% { transform: rotate(-8deg); }
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav { padding:16px 24px; }
+  .hero h1 { font-size:42px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="floating-hearts"></div>
+<div class="bunny">🐰</div>
+
+<nav>
+  <div class="logo">Ara</div>
+  <div>
+    <a href="#" onclick="openPage('home')">Home</a>
+    <a href="#" onclick="openPage('about')">About</a>
+    <a href="#" onclick="openPage('ask')">Question</a>
+  </div>
+</nav>
+
+<section id="home" class="page active hero">
+  <h1 class="reveal">Ara.</h1>
+  <p class="reveal">
+    Aku bikin website ini dengan satu niat sederhana.
+    Menyampaikan sesuatu yang sebenarnya bisa diucapkan,
+    tapi ingin aku sampaikan dengan cara yang lebih serius.
+  </p>
+</section>
+
+<section id="about" class="page about">
+  <h2 class="reveal">Tentang Kamu</h2>
+  <p class="reveal">Aku suka caramu hadir apa adanya.</p>
+  <p class="reveal">Aku nyaman sama kamu, dan rasa itu tidak datang tiba-tiba.</p>
+  <div class="gallery">
+    <div class="photo reveal">Moment 1</div>
+    <div class="photo reveal">Moment 2</div>
+    <div class="photo reveal">Moment 3</div>
+  </div>
+</section>
+
+<section id="ask" class="page ask">
+  <h2 class="reveal">Satu Hal Penting</h2>
+  <p class="reveal">Jadi aku ingin bertanya dengan jelas.</p>
+  <div class="buttons reveal">
+    <button class="yes" onclick="yes()">Iya</button>
+    <button class="no" onmouseenter="move(this)">Belum</button>
+  </div>
+  <p style="margin-top:18px;font-size:14px;color:#8C6A7B">(jawabnya pelan-pelan yaa 🐰)</p>
+</section>
+
+<div id="loveScene">
+  <div class="heart left"></div>
+  <div class="heart right"></div>
+  <div class="heart center"></div>
+</div>
+
+<section id="ending" class="page ask ending">
+  <h2 class="reveal">Terima Kasih, Ara</h2>
+  <p class="reveal">Mulai hari ini, aku memilih kamu.</p>
+</section>
+
+<script>
+const container = document.querySelector('.floating-hearts');
+for(let i=0;i<20;i++){
+  const h=document.createElement('span');
+  h.style.left=Math.random()*100+'%';
+  h.style.animationDuration=8+Math.random()*6+'s';
+  h.style.animationDelay=Math.random()*5+'s';
+  container.appendChild(h);
+}
+
+function openPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById(p).classList.add('active');
+  window.scrollTo(0,0);
+  reveal();
+}
+
+function yes(){
+  const s=document.getElementById('loveScene');
+  s.classList.add('active');
+  setTimeout(()=>s.classList.add('play'),100);
+  setTimeout(()=>{
+    s.classList.remove('active','play');
+    openPage('ending');
+  },3500);
+}
+
+function move(b){
+  b.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*120-60}px)`;
+}
+
+function reveal(){
+  document.querySelectorAll('.reveal').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight-100)
+      el.classList.add('active');
+  });
+}
+window.addEventListener('scroll',reveal);
+reveal();
+</script>
+
+</body>
+</html>
